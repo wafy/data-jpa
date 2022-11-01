@@ -1,41 +1,7 @@
 package study.datajpa.repository;
 
-import org.springframework.stereotype.Repository;
-import study.datajpa.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 import study.datajpa.entity.Team;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
-import java.util.Optional;
-
-@Repository
-public class TeamRepository {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    public Member save(Member member) {
-        em.persist(member);
-        return member;
-    }
-
-    public void delete(Member member) {
-        em.remove(member);
-    }
-
-    public Optional<Member> findById(Long id) {
-        Member member = em.find(Member.class, id);
-        return Optional.ofNullable(member);
-    }
-
-    public long count() {
-        return em.createQuery("select count(t) from Team t", Long.class)
-                .getSingleResult();
-    }
-
-    public List<Team> findAll() {
-        return em.createQuery("select t from Team t", Team.class)
-                .getResultList();
-    }
+public interface TeamRepository extends JpaRepository<Team, Long> {
 }

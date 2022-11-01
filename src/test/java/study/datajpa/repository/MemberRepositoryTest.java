@@ -19,8 +19,10 @@ class MemberRepositoryTest {
 
     @Test
     public void testMember() {
+        System.out.println("memberRepository.getClass() = " + memberRepository.getClass());
         Member member = new Member("memberA");
         memberRepository.save(member);
+        
 
         Member findMember = memberRepository.findById(member.getId()).get();
 
