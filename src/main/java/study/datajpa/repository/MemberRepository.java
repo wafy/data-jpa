@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findByUsernameAndAgeGreaterThan(String name, int age);
 
-//    @Query(name = "Member.findByUsername") 없어도 정상 동작
+    //    @Query(name = "Member.findByUsername") 없어도 정상 동작
     List<Member> findByUsername(@Param("username") String username);
 
     @Query("select m from Member m where m.username = :username and m.age = :age")
@@ -27,4 +27,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m from Member m where m.username in :names")
     List<Member> findByNames(@Param("names") Collection<String> names);
+
+
 }
