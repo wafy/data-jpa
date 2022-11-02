@@ -54,5 +54,16 @@ class MemberJpaRepositoryTest {
         assertThat(deletedCount).isEqualTo(0);
     }
 
+    @Test
+    void testNamedQuery() {
+        Member member1 = new Member("member1", 10);
+        Member member2 = new Member("member2", 20);
+        memberJpaRepository.save(member1);
+        memberJpaRepository.save(member2);
+
+        List<Member> result = memberJpaRepository.findByUsername("member1");
+        Member findMember = result.get(0);
+        assertThat(findMember).isEqualTo(member1);
+    }
 
 }
