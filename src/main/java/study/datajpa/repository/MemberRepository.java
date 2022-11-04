@@ -50,7 +50,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     @Query("select m from Member m")
     List<Member> findMemberEntityGraph();
 
-//    @EntityGraph(attributePaths = {"team"})
+    //    @EntityGraph(attributePaths = {"team"})
     @EntityGraph("Member.all")
     List<Member> findEntityGraphByUsername(@Param("username") String username);
 
@@ -61,6 +61,11 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<Member> findLockByUsername(String username);
 
-//    List<UsernameOnlyDto> findProjectionsByUsername(@Param("username") String username);
+    //    List<UsernameOnlyDto> findProjectionsByUsername(@Param("username") String username);
     <T> List<T> findProjectionsByUsername(@Param("username") String username, Class<T> type);
+
+    @Query(nativeQuery = true, value = "select m.member_id as id, m.username, t.name as teamName" +
+            " from member m left join team t",
+            countQuery ="select count(*) from member")
+    Page<MemberProjections> findByNativeProjections(Pageable pageable);
 }
